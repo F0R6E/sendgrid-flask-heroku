@@ -1,8 +1,8 @@
 import os
 import sendgrid
-import os
+import sys
 from flask import Flask, request
-from sendgrid.helpers.mail import Mail, Email
+from sendgrid.helpers.mail import Email, Content, Substitution, Mail
 import urllib2 as urllib
 import json
 
@@ -19,6 +19,8 @@ def mail():
         sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
         from_email = Email(os.environ["FROM_EMAIL"])
         to_email = Email(data_dict['email'])
+        print('to_email = ', to_email)
+        sys.stdout.flush()
         mail = Mail(from_email, to_email)
         mail.template_id = os.environ["TEMPLATE_ID"]
         try:
