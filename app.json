@@ -1,5 +1,5 @@
 {
-  "name": "sendgrid-flask-heroku",
+  "name": "sendgrid-flask-api",
   "description": "Try out SendGrid by sending your first email within seconds with this minimalistic yet powerful integration",
   "repository": "https://github.com/hackersandslackers/sendgrid-flask-heroku",
   "success_url": "/",

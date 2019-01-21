@@ -1,10 +1,11 @@
 import os
-import sendgrid
 import sys
-from flask import Flask, request
-from sendgrid.helpers.mail import Email, Content, Substitution, Mail
-import urllib2 as urllib
 import json
+import urllib2 as urllib
+from flask import Flask, request
+import sendgrid
+from sendgrid.helpers.mail import Email, Content, Substitution, Mail
+
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
@@ -13,6 +14,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["POST"])
 def mailer():
+    """Send welcome email."""
     if request.method == "POST":
         post_data = request.data
         data_dict = json.loads(post_data)

@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 sendgrid = "*"
 Flask = "*"
-
+gunicorn="*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.7.1"
