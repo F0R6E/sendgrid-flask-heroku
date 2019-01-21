@@ -18,11 +18,11 @@ def mailer():
     if request.method == "POST":
         post_data = request.data
         data_dict = json.loads(post_data)
+        print('data_dict = ', data_dict)
+        sys.stdout.flush()
         sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
         from_email = Email(os.environ["FROM_EMAIL"])
         to_email = Email(data_dict['email'])
-        print('to_email = ', to_email)
-        sys.stdout.flush()
         mail = Mail(from_email, to_email)
         mail.template_id = os.environ["TEMPLATE_ID"]
         try:
