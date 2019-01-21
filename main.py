@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 
 @app.route("/", methods=["POST"])
-def mail():
+def mailer():
     if request.method == "POST":
         post_data = request.data
         data_dict = json.loads(post_data)
