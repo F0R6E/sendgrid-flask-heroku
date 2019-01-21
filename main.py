@@ -2,7 +2,7 @@ import os
 import sys
 import json
 import urllib.request as urllib
-from flask import Flask, request
+from flask import Flask, request, make_response
 import sendgrid
 from sendgrid.helpers.mail import Email, Content, Substitution, Mail
 
@@ -30,12 +30,17 @@ def mailer():
             mail.template_id = os.environ["TEMPLATE_ID"]
             try:
                 response = sg.client.mail.send.post(request_body=mail.get())
+                return make_response(response.json(), 200)
             except urllib.HTTPError as e:
                 print(e.read())
+                sys.stdout.flush()
+                print(response.status_code)
+                sys.stdout.flush()
+                print(response.body)
+                sys.stdout.flush()
+                print(response.headers)
+                sys.stdout.flush()
                 exit()
-            print(response.status_code)
-            print(response.body)
-            print(response.headers)
 
 
 if __name__ == "__main__":
