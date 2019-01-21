@@ -15,6 +15,7 @@ app = Flask(__name__)
 @app.route("/", methods=["POST"])
 def mailer():
     """Send welcome email."""
+    sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
     if request.method == "POST":
         post_data = request.data
         data_dict = json.loads(post_data)
@@ -22,10 +23,10 @@ def mailer():
         sys.stdout.flush()
         subscribers = data_dict['subscribers']
         for subscriber in subscribers:
-            email = subscriber['email']
-            sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
+            to_email = Email(subscriber['email'])
             from_email = Email(os.environ["FROM_EMAIL"])
-            to_email = Email(email)
+            print('to_email = ', to_email)
+            sys.stdout.flush()
             mail = Mail(from_email, to_email)
             mail.template_id = os.environ["TEMPLATE_ID"]
             try:
@@ -40,7 +41,7 @@ def mailer():
                 sys.stdout.flush()
                 print(response.headers)
                 sys.stdout.flush()
-                exit()
+                return make_response(e.read(), 500)
 
 
 if __name__ == "__main__":
