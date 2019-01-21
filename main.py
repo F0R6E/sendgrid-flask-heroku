@@ -25,7 +25,7 @@ def mailer():
         for subscriber in subscribers:
             to_email = Email(subscriber['email'])
             from_email = Email(os.environ["FROM_EMAIL"])
-            print('to_email = ', to_email)
+            print("subscriber['email'] = ", subscriber['email'])
             sys.stdout.flush()
             mail = Mail(from_email, to_email)
             mail.template_id = os.environ["TEMPLATE_ID"]
