@@ -1,7 +1,7 @@
 import os
 import sys
 import json
-import urllib2 as urllib
+import urllib.request as urllib
 from flask import Flask, request
 import sendgrid
 from sendgrid.helpers.mail import Email, Content, Substitution, Mail
