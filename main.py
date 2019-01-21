@@ -20,19 +20,22 @@ def mailer():
         data_dict = json.loads(post_data)
         print('data_dict = ', data_dict)
         sys.stdout.flush()
-        sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
-        from_email = Email(os.environ["FROM_EMAIL"])
-        to_email = Email(data_dict['email'])
-        mail = Mail(from_email, to_email)
-        mail.template_id = os.environ["TEMPLATE_ID"]
-        try:
-            response = sg.client.mail.send.post(request_body=mail.get())
-        except urllib.HTTPError as e:
-            print(e.read())
-            exit()
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        subscribers = data_dict['subscribers']
+        for subscriber in subscribers:
+            email = subscriber['email']
+            sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
+            from_email = Email(os.environ["FROM_EMAIL"])
+            to_email = Email(email)
+            mail = Mail(from_email, to_email)
+            mail.template_id = os.environ["TEMPLATE_ID"]
+            try:
+                response = sg.client.mail.send.post(request_body=mail.get())
+            except urllib.HTTPError as e:
+                print(e.read())
+                exit()
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
 
 
 if __name__ == "__main__":
