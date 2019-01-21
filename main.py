@@ -25,13 +25,14 @@ def mailer():
         for subscriber in subscribers:
             to_email = Email(subscriber['email'])
             from_email = Email(os.environ["FROM_EMAIL"])
+            subject = "Welcome to Hackers & Slackers"
             print("subscriber['email'] = ", subscriber['email'])
             sys.stdout.flush()
-            mail = Mail(from_email, to_email)
+            mail = Mail(from_email, subject, to_email)
             mail.template_id = os.environ["TEMPLATE_ID"]
             try:
                 response = sg.client.mail.send.post(request_body=mail.get())
-                return make_response(response.json(), 200)
+                return make_response(response.content, 200)
             except urllib.HTTPError as e:
                 print(e.read())
                 sys.stdout.flush()
